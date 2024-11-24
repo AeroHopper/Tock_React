@@ -27,25 +27,30 @@ export const renderChat: (
     ...options
   }: TockOptions = {},
 ): void => {
-  if (typeof localStorage === 'boolean') {
-    throw new Error(
-      'Enabling local storage history through the localStorage option is now unsupported, use localStorageHistory.enable instead',
-    );
+  // Fix for invalid localStorage boolean check
+  if (typeof localStorage !== 'object' || localStorage === null) {
+    throw new Error('localStorage must be an object or valid configuration.');
   }
 
+  // Handle localStorageHistory.enable
   if (options.localStorageHistory?.enable) {
     localStorage.enableMessageHistory = true;
   }
+
+  // Set max message count from localStorageHistory settings
   if (options.localStorageHistory?.maxNumberMessages) {
-    localStorage.maxMessageCount =
-      options.localStorageHistory.maxNumberMessages;
+    localStorage.maxMessageCount = options.localStorageHistory.maxNumberMessages;
   }
+
+  // Handle network settings
   if (options.disableSse) {
     network.disableSse = true;
   }
   if (options.extraHeadersProvider) {
     network.extraHeadersProvider = options.extraHeadersProvider;
   }
+
+  // Prepare settings for TockContext
   const settings: TockOptionalSettings = {
     locale,
     localStorage,
@@ -53,6 +58,7 @@ export const renderChat: (
     renderers,
   };
 
+  // Render the Chat component with the provided settings and theme
   createRoot(container).render(
     <ThemeProvider theme={createTheme(theme)}>
       <TockContext endpoint={endpoint} settings={settings}>
@@ -61,5 +67,3 @@ export const renderChat: (
     </ThemeProvider>,
   );
 };
-
-//asldhfapohsdfajsdklf
