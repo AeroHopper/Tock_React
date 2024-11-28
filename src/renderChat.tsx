@@ -27,7 +27,7 @@ export const renderChat: (
     ...options
   }: TockOptions = {},
 ): void => {
-  // Fix for invalid localStorage boolean check
+  // Fix for invalid localStorage boolean 
   if (typeof localStorage !== 'object' || localStorage === null) {
     throw new Error('localStorage must be an object or valid configuration.');
   }
@@ -37,7 +37,7 @@ export const renderChat: (
     localStorage.enableMessageHistory = true;
   }
 
-  // Set max message count from localStorageHistory settings
+  // Set max message count from localStorageHistory 
   if (options.localStorageHistory?.maxNumberMessages) {
     localStorage.maxMessageCount = options.localStorageHistory.maxNumberMessages;
   }

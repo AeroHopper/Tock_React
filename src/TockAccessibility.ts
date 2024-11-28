@@ -10,7 +10,7 @@ export interface CarouselAccessibility {
   previousButtonLabel?: string;
   nextButtonLabel?: string;
 }
-
+// QRCarouselAccessibility
 export interface QRCarouselAccessibility {
   previousButtonLabel?: string;
   nextButtonLabel?: string;
